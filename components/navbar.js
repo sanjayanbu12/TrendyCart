@@ -43,7 +43,7 @@ function navbar() {
             </div>
             <div class="flag" id="wind">
                 ${loginSection}
-                <h2 style="color: black;">My Trendy Cart</h2>
+                <h2 style="color: black;">My Trendy Shop</h2>
             </div>
         </div>
         <div id="nav-e">
