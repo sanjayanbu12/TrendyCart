@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign In</title>
     <link rel="stylesheet" href="./style/signin.css">
     <link rel="stylesheet" href="./style/footer.css">
 </head>
@@ -19,66 +19,41 @@
 
     <div id="screen-banner">
         <div id="signinform">
-            <label for="">Account:</label>
+            <label for="signin-mail">Account:</label>
             <input type="text" placeholder="Email address or member ID" id="signin-mail">
 
             <div>
-                <label for="">Password:</label>
+                <label for="signin-password">Password:</label>
             </div>
-
             <input type="password" placeholder="Password" id="signin-password">
 
-            <span>
- 
-            </span>
-            <button onclick="signin()">Sign in</button>
+            <span></span>
+            <button onclick="signin()">Sign In</button>
             <div>
-                <a href="./signUp.html">Join Free</a>
+                <a href="./signUp.html">Create Account</a>
             </div>
         </div>
     </div>
-</body>
 
-</html>
-
-<script type="module">
-    import footer from "./components/footer.js";
-
-    document.querySelector("#footersection").innerHTML = footer();
-</script>
-
-<script>
-    let alibabauserdb = JSON.parse(localStorage.getItem("alibabauserdb")) || [];
-    async function signin() {
-        try {
+    <script>
+        function signin() {
             let email = document.querySelector("#signin-mail").value;
             let password = document.querySelector("#signin-password").value;
 
-            let everyDetails = {
-                email,
-                password
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            let user = users.find(user => user.email === email && user.password === password);
+
+            if (!user) {
+                alert("Invalid email or password!");
+                return;
             }
 
-            everyDetails = JSON.stringify(everyDetails);
-
-            let response = await fetch("https://alibaba-backend.herokuapp.com/login", {
-                method: "POST",
-                body: everyDetails,
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
-            console.log(response);
-            let res = await response.json();
-
-            if (res.message) return alert(res.message);
-
-            localStorage.setItem("Authorization", JSON.stringify(res.token));
-
+            localStorage.setItem("loggedInUser", JSON.stringify(user));
+            alert("Sign In successful!");
             window.location.href = "./index.html";
-            return;
-        } catch (error) {
-            console.log(error);
         }
-    }
-</script>
+    </script>
+</body>
+
+</html>
